@@ -1,17 +1,43 @@
 import React,{Component} from 'react'
 import Bookshelf from '../Components/Bookshelf'
-
+import { getAll } from '../BooksAPI'
+ import * as BooksAPI from '../BooksAPI'
 
 class Home extends Component{
+
+  state={
+    books:'',
+  }
+
+ componentDidMount(){
+ BooksAPI.getAll().then(response=>this.setState({books:response}))
+ }
+
+changeBookShelf(book, selection){
+  book.shelf===selection?book:this.setState(()=>({
+    book:book.id.shelf=selection
+  }))
+}
+
   render(){
+  
+    var bookList=[...this.state.books];
+
+    const wantToRead=bookList.filter(book=> book.shelf==="wantToRead")
+    const read=bookList.filter(book=>book.shelf==="read")
+    const currentlyReading=bookList.filter(book=>book.shelf==="currentlyReading")
+    console.log(bookList)
     return(<div>
+      
            <div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
               <div>
-               <Bookshelf/>
+               <Bookshelf show={currentlyReading} name="Curently Reading" changeCategory={this.changeBookShelf}/>
+               <Bookshelf show={wantToRead} name="Want To Read" changeCategory={this.changeBookShelf}/>
+               <Bookshelf show={read} name="Read" changeCategory={this.changeBookShelf}/>
           </div>      
             <div className="open-search">
               <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
