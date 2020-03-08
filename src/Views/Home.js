@@ -1,27 +1,35 @@
 import React,{Component} from 'react'
 import Bookshelf from '../Components/Bookshelf'
-import { getAll } from '../BooksAPI'
+import {Link} from 'react-router-dom'
  import * as BooksAPI from '../BooksAPI'
 
 class Home extends Component{
 
   state={
-    books:'',
+    books:[],
   }
 
  componentDidMount(){
  BooksAPI.getAll().then(response=>this.setState({books:response}))
  }
 
-changeBookShelf(book, selection){
-  book.shelf===selection?book:this.setState(()=>({
-    book:book.id.shelf=selection
-  }))
+changeBookShelf=(book, selection)=>{
+
+ this.setState({
+    books:this.state.books.map(bo=>{
+      const tempBook = bo.id===book.id ? {...bo, shelf: selection } : bo;
+      return tempBook;
+ })
+  
+})}
+
+handleSearch=()=>{
+
 }
 
   render(){
   
-    var bookList=[...this.state.books];
+    var bookList=this.state.books;
 
     const wantToRead=bookList.filter(book=> book.shelf==="wantToRead")
     const read=bookList.filter(book=>book.shelf==="read")
@@ -40,7 +48,7 @@ changeBookShelf(book, selection){
                <Bookshelf show={read} name="Read" changeCategory={this.changeBookShelf}/>
           </div>      
             <div className="open-search">
-              <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
+              <Link to='/search'><button>Add a book</button></Link>
             </div>
           </div>
           </div>

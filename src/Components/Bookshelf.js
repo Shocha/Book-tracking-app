@@ -6,7 +6,7 @@ class Bookshelf extends Component{
   render(){
 
     const books=this.props.show
-console.log(books)
+
     return(<div>
 
 <div className="bookshelf">
