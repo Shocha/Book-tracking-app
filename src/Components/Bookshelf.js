@@ -14,12 +14,12 @@ class Bookshelf extends Component{
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                       {books.map(book=>(
-
+                        
                         <div className="book" key={book.id}>
                         <div className="book-top">
                           <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})`}}></div>
                           <div className="book-shelf-changer">
-                            <select value={book.shelf} onChange={e=>this.props.changeCategory(book,e.target.value)}>
+                            <select value={book.shelf} onChange={e=>this.props.moveShelf(book,e.target.value)}>
                               <option value="move" disabled>Move to...</option>
                               <option value="currentlyReading">Currently Reading</option>
                               <option value="wantToRead">Want to Read</option>
