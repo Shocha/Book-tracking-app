@@ -42,7 +42,7 @@ class Search extends Component{
         
         <div className="search-books">
             <div className="search-books-bar">
-              <Link exact to='/'><button className="close-search" >Close</button></Link>
+              <Link  to='/'><button className="close-search" >Close</button></Link>
               <div className="search-books-input-wrapper">
                 <input type="text" placeholder="Search by title or author" 
                 value={this.state.query} 
